@@ -1,17 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit/dist";
 
-const initialState = { isAuthenticated: false, token: '' }
+const initialState = { isAuthenticated: false}
 
 const authSlice = createSlice({
     name: 'authorise',
     initialState,
     reducers: {
-        login(state, action) {
-            state.token = action.payload;
+        login(state) {
             state.isAuthenticated = true;
         },
         logout(state) {
-            state.token = ''
             state.isAuthenticated = false;
         }
     }

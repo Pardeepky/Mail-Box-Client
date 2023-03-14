@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { authActions } from './store/auth'
-import ComposeMail from './views/private/ComposeMail'
+import { getMailHandler } from './store/mail-thunk'
 
 const App = () => {
   const navigate = useNavigate()
@@ -25,7 +25,9 @@ const App = () => {
 
   return (
     <>
-      <ComposeMail />
+      <main>
+        <Outlet />
+      </main>
     </>
   )
 }

@@ -1,13 +1,16 @@
 import React, { useRef, useState } from 'react';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { EditorState } from 'draft-js';
+import { BsX } from 'react-icons/bs'
 import './ComposeBox.css';
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { sendMailHandler } from '../store/mail-thunk';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const ComposeBox = () => {
+  const navigate = useNavigate();
   const emailRef = useRef();
   const subjectRef = useRef();
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
@@ -28,13 +31,20 @@ const ComposeBox = () => {
     dispatch(sendMailHandler(formValues));
   }
 
+  const handleClick = () => {
+    navigate('/home');
+  }
+
   return (
     <>
       <div className="overlay">
-        <Container className="compose-box">
-          <Row>
+        <Container className="compose-box bg-default">
+          <Row className='d-flex'>
             <Col className="compose-header">
               <h5>New Message</h5>
+            </Col>
+            <Col className="compose-header justify-content-end">
+              <Button variant='default' onClick={handleClick} ><BsX size={30} /></Button>
             </Col>
           </Row>
           <Row>

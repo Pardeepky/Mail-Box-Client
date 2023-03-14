@@ -60,6 +60,7 @@ const Login = ({ setIsLogging }) => {
                 if (res.ok) {
                     const data = await res.json();
                     dispatch(authActions.login(data.idToken));
+                    localStorage.setItem('mailId', JSON.stringify(data.email));
                     localStorage.setItem('token', JSON.stringify(data.idToken));
                     navigate('/home');
                     emailRef.current.value = '';

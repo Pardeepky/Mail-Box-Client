@@ -1,4 +1,5 @@
 import { mailSliceAction } from "./mailSlice";
+import axios from 'axios';
 
 export const sendMailHandler = (mailobj) => {
     return async (disptach) => {
@@ -111,6 +112,25 @@ export const updateItemById = (item, id) => {
         };
         try {
             await UpdateEmailList();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
+export const deleteItemById = (id) => {
+    return async (dispatch) => {
+        let emailId = JSON.parse(localStorage.getItem("mailId").replace(/[&@.]/g, ""));
+
+        const deleteEmail = async () => {
+            const response = await axios.delete(`https://mail-box-client-50996-default-rtdb.firebaseio.com/${emailId}/${id}.json`);
+            if (response.status) {
+                return;
+            }
+        };
+        try {
+            await deleteEmail();
+            dispatch(getMailHandler())
         } catch (error) {
             console.log(error);
         }

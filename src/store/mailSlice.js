@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialval = { sendMail: false, mailList: [] };
+const initialval = { sendMail: false, mailList: [], count: 0 };
 
 const mailSlice = createSlice({
   name: "mail",
@@ -12,6 +12,11 @@ const mailSlice = createSlice({
     },
     updateMailList: (state, action) => {
       state.mailList = action.payload;
+    },
+    updateCount: (state, action) => {
+      const mails = action.payload;
+      const unreadMsgs = mails.filter((item) => item.read === false);
+      state.count = unreadMsgs.length;
     }
   },
 });

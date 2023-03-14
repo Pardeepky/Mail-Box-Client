@@ -9,6 +9,7 @@ import LoginScreen from './views/public/LoginScreen';
 import store from './store';
 import ComposeMail from './views/private/ComposeMail';
 import MailBox from './views/private/MailBox';
+import MailDetails from './components/MailBox/MailDetails';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,8 +19,11 @@ root.render(
         <Routes>
           <Route path='/' element={<LoginScreen />} />
           <Route path='/home' element={<App />}>
-            <Route path='/home' element={<MailBox />} />
+            <Route path='/home/inbox' element={<MailBox />} />
+            <Route path='/home/inbox/:id' element={<MailDetails />} />
             <Route path='/home/compose' element={<ComposeMail />} />
+            <Route path='/home/sent' element={<ComposeMail />} />
+            <Route path='/home/draft' element={<ComposeMail />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

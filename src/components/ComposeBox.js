@@ -26,7 +26,8 @@ const ComposeBox = () => {
     const formValues = {
       email: emailRef.current.value,
       subject: subjectRef.current.value,
-      editor: editorState.getCurrentContent().getPlainText()
+      editor: editorState.getCurrentContent().getPlainText(),
+      read: false
     }
     dispatch(sendMailHandler(formValues));
   }
@@ -37,8 +38,8 @@ const ComposeBox = () => {
 
   return (
     <>
-      <div className="overlay">
-        <Container className="compose-box bg-default">
+      <div>
+        <Container className="m-3 bg-default">
           <Row className='d-flex'>
             <Col className="compose-header">
               <h5>New Message</h5>

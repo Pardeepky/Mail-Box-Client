@@ -1,8 +1,21 @@
 import React from "react";
 // import "./InboxPage.css";
 import { Container, Form, Button, Navbar, Nav } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { authActions } from "../../store/auth";
 
 const MailBoxNavBar = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('mailId');
+        dispatch(authActions.logout());
+        navigate('/')
+    }
+
     return (
         <>
             <Navbar bg="success" fluid={1}>
@@ -19,6 +32,9 @@ const MailBoxNavBar = () => {
                         />
                         <Button variant="primary">Search</Button>
                     </Form>
+                    <Nav>
+                        <Button variant="danger" onClick={handleLogout}>Logout</Button>
+                    </Nav>
                 </Container>
             </Navbar>
         </>

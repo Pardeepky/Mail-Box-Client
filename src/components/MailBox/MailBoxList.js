@@ -24,7 +24,6 @@ const MailBoxList = () => {
         <>
             <ListGroup as="ul" variant="primary" className="m-3" >
                 {mails.map((item) => {
-                    console.log(item.read === true);
                     return (
                         <ListGroup.Item key={item.id}
                             className="m-1 "

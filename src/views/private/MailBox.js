@@ -7,8 +7,17 @@ const MailBox = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getMailHandler());
+        const refresh = setInterval(() => {
+            console.log("setintervelid");
+            dispatch(getMailHandler());
+        }, 2000);
+        return () => {
+            console.log("clearintervelid");
+            clearInterval(refresh);
+        };
     }, []);
+
+
 
     return (
         <>

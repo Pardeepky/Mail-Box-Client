@@ -2,26 +2,24 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Card } from "react-bootstrap";
 import { useParams } from 'react-router-dom'
+import useHttp from '../../hooks/api';
 
 const SentMailDetails = () => {
     const { id } = useParams();
     const [mail, setMail] = useState({});
+    const { sendRequest: fetchTasks } = useHttp();
 
-    const retrieveMailData = async () => {
-        try {
-            let emailId = JSON.parse(localStorage.getItem("mailId").replace(/[&@.]/g, ""));
-            const res = await axios.get(`https://mail-box-client-50996-default-rtdb.firebaseio.com/sentMails/${emailId}/${id}.json`)
-            if (res.status) {
-                setMail(res.data);
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
-    
     useEffect(() => {
-        retrieveMailData()
-    }, [])
+        let emailId = JSON.parse(localStorage.getItem("mailId").replace(/[&@.]/g, ""));
+        const transformTasks = (mailsObj) => {
+            setMail(mailsObj);
+        };
+
+        fetchTasks(
+            { url: `https://mail-box-client-50996-default-rtdb.firebaseio.com/sentMails/${emailId}/${id}.json` },
+            transformTasks
+        );
+    }, [fetchTasks]);
 
     return (
         <>

@@ -4,6 +4,7 @@ import { Container, Form, Button, Navbar, Nav } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authActions } from "../../store/auth";
+import { mailSliceAction } from "../../store/mailSlice";
 
 const MailBoxNavBar = () => {
     const navigate = useNavigate()
@@ -13,6 +14,7 @@ const MailBoxNavBar = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('mailId');
         dispatch(authActions.logout());
+        dispatch(mailSliceAction.onLogout());
         navigate('/')
     }
 

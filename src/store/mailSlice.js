@@ -18,11 +18,16 @@ const mailSlice = createSlice({
       const unreadMsgs = mails.filter((item) => item.read === false);
       state.count = unreadMsgs.length;
     },
-    updateMailSentList: (state, action)=> {
+    updateMailSentList: (state, action) => {
       state.mailsSent = action.payload
     },
-    setLoading: (state, action)=>{
+    setLoading: (state, action) => {
       state.loading = action.payload
+    },
+    onLogout: (state) => {
+      state.mailList = []
+      state.mailsSent = []
+      state.count = 0
     }
   },
 });

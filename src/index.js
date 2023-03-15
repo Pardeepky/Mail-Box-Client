@@ -24,6 +24,7 @@ root.render(
             <Route path='/home/inbox' element={<MailBox />} />
             <Route path='/home/inbox/:id' element={<MailDetails />} />
             <Route path='/home/compose' element={<ComposeMail />} />
+            <Route path='/home/compose/:mailId' element={<ComposeMail />} />
             <Route path='/home/sent' element={<SentMail />} />
             <Route path='/home/sent/:id' element={<SentMailDetails />} />
             <Route path='/home/draft' element={<ComposeMail />} />

@@ -9,6 +9,7 @@ const SentMailList = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const sentMails = useSelector((state) => state.mail.mailsSent);
+    const loading = useSelector(state => state.mail.loading)
 
     const handleClick = (item) => {
         navigate(`/home/sent/${item.id}`)
@@ -22,7 +23,8 @@ const SentMailList = () => {
     return (
         <>
             <ListGroup as="ul" variant="primary" className="m-3">
-                {sentMails.length === 0 ? <p className="text-center">Mail Box Empty</p> : sentMails.map((item) => {
+                {loading && <p className="text-center">Loading...</p>}
+                {!loading && (sentMails.length === 0 ? <p className="text-center">Mail Box Empty</p> : sentMails.map((item) => {
                     return (
                         <ListGroup.Item key={item.id}
                             className="m-1 "
@@ -36,7 +38,7 @@ const SentMailList = () => {
                             </ul>
                         </ListGroup.Item>
                     )
-                })}
+                }))}
             </ListGroup>
         </>
     );

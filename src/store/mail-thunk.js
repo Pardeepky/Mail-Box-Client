@@ -2,7 +2,7 @@ import { mailSliceAction } from "./mailSlice";
 import axios from 'axios';
 
 export const sendMailHandler = (mailobj) => {
-    return async (disptach) => {
+    return async (dispatch) => {
         let emailId = await mailobj.email.replace(/[&@.]/g, "");
         let userId = JSON.parse(localStorage.getItem("mailId").replace(/[&@.]/g, ""));
 
@@ -28,17 +28,20 @@ export const sendMailHandler = (mailobj) => {
             return data;
         };
         try {
+            dispatch(mailSliceAction.setLoading(true))
             await postMail();
-            disptach(mailSliceAction.setSentData());
-            disptach(getMailHandler());
+            dispatch(mailSliceAction.setSentData());
+            dispatch(getMailHandler());
         } catch (error) {
             console.log(error.message);
+        } finally {
+            dispatch(mailSliceAction.setLoading(false))
         }
     };
 };
 
 export const getMailHandler = () => {
-    return async (disptach) => {
+    return async (dispatch) => {
         let emailId = JSON.parse(localStorage.getItem("mailId").replace(/[&@.]/g, ""));
 
         const getMail = async () => {
@@ -60,6 +63,7 @@ export const getMailHandler = () => {
             }
         }
         try {
+            dispatch(mailSliceAction.setLoading(true))
             const data = await getMail();
             const mailList = [];
             for (const key in data) {
@@ -80,17 +84,19 @@ export const getMailHandler = () => {
                 sentMailList.push(Obj);
             }
 
-            disptach(mailSliceAction.updateCount(mailList));
-            disptach(mailSliceAction.updateMailList(mailList));
-            disptach(mailSliceAction.updateMailSentList(sentMailList))
+            dispatch(mailSliceAction.updateCount(mailList));
+            dispatch(mailSliceAction.updateMailList(mailList));
+            dispatch(mailSliceAction.updateMailSentList(sentMailList))
         } catch (error) {
             console.log(error.message);
+        } finally {
+            dispatch(mailSliceAction.setLoading(false))
         }
     };
 };
 
 export const getMailByIdHandler = (id) => {
-    return async (disptach) => {
+    return async (dispatch) => {
         let emailId = JSON.parse(localStorage.getItem("mailId").replace(/[&@.]/g, ""));
 
         const getMail = async () => {
@@ -102,10 +108,13 @@ export const getMailByIdHandler = (id) => {
             return data;
         };
         try {
+            dispatch(mailSliceAction.setLoading(true))
             const data = await getMail();
-            disptach(updateItemById(data, id));
+            dispatch(updateItemById(data, id));
         } catch (error) {
             console.log(error.message);
+        } finally {
+            dispatch(mailSliceAction.setLoading(false))
         }
     };
 };
@@ -137,9 +146,12 @@ export const updateItemById = (item, id) => {
             return data;
         };
         try {
+            dispatch(mailSliceAction.setLoading(true))
             await UpdateEmailList();
         } catch (error) {
             console.log(error);
+        } finally {
+            dispatch(mailSliceAction.setLoading(false))
         }
     };
 };
@@ -155,10 +167,13 @@ export const deleteItemById = (id) => {
             }
         };
         try {
+            dispatch(mailSliceAction.setLoading(true))
             await deleteEmail();
             dispatch(getMailHandler())
         } catch (error) {
             console.log(error);
+        } finally {
+            dispatch(mailSliceAction.setLoading(false))
         }
     };
 };
@@ -174,10 +189,13 @@ export const deleteSentItemById = (id) => {
             }
         };
         try {
+            dispatch(mailSliceAction.setLoading(true))
             await deleteEmail();
             dispatch(getMailHandler())
         } catch (error) {
             console.log(error);
+        } finally {
+            dispatch(mailSliceAction.setLoading(false))
         }
     };
 };

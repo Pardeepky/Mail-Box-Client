@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { EditorState } from 'draft-js';
 import { BsX } from 'react-icons/bs'
@@ -7,10 +7,11 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { sendMailHandler } from '../store/mail-thunk';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ComposeBox = () => {
   const navigate = useNavigate();
+  const { mailId } = useParams()
   const emailRef = useRef();
   const subjectRef = useRef();
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
@@ -33,8 +34,15 @@ const ComposeBox = () => {
   }
 
   const handleClick = () => {
-    navigate('/home');
+    navigate('/home/inbox');
   }
+
+  useEffect(() => {
+    if (mailId) {
+      emailRef.current.value = JSON.stringify(mailId)
+    } else return;
+
+  }, [])
 
   return (
     <>

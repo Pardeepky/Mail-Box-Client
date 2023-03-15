@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getMailHandler } from '../../store/mail-thunk';
 import SentMailList from '../../components/SentBox/SentMailList';
 

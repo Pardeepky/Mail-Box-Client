@@ -2,7 +2,8 @@ import React from "react";
 import { ListGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {MdDelete} from 'react-icons/md'
+import { MdDelete } from 'react-icons/md';
+import { BsFillEyeFill } from 'react-icons/bs'
 import { deleteItemById } from "../../store/mail-thunk";
 
 const MailBoxList = () => {
@@ -21,8 +22,9 @@ const MailBoxList = () => {
 
     return (
         <>
-            <ListGroup as="ul" variant="primary" className="m-3">
+            <ListGroup as="ul" variant="primary" className="m-3" >
                 {mails.map((item) => {
+                    console.log(item.read === true);
                     return (
                         <ListGroup.Item key={item.id}
                             className="m-1 "
@@ -30,7 +32,7 @@ const MailBoxList = () => {
                             action
                             onClick={() => handleClick(item)}>
                             <ul style={item.read === true ? { listStyleType: 'none', } : null}>
-                                <li className="d-flex justify-content-between align-items-center"><span>{item.email}</span> <span onClick={(e)=>handleDelete(e, item.id)}><MdDelete /></span></li>
+                                <li className="d-flex justify-content-between align-items-center"><span>{item.read === false ? <BsFillEyeFill /> : ''} {item.subject}</span> <span onClick={(e) => handleDelete(e, item.id)}><MdDelete /></span></li>
                             </ul>
                         </ListGroup.Item>
                     )

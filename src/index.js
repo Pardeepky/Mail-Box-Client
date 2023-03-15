@@ -10,6 +10,8 @@ import store from './store';
 import ComposeMail from './views/private/ComposeMail';
 import MailBox from './views/private/MailBox';
 import MailDetails from './components/MailBox/MailDetails';
+import SentMail from './views/private/SentMail';
+import SentMailDetails from './components/SentBox/SentMailDetails';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,7 +24,8 @@ root.render(
             <Route path='/home/inbox' element={<MailBox />} />
             <Route path='/home/inbox/:id' element={<MailDetails />} />
             <Route path='/home/compose' element={<ComposeMail />} />
-            <Route path='/home/sent' element={<ComposeMail />} />
+            <Route path='/home/sent' element={<SentMail />} />
+            <Route path='/home/sent/:id' element={<SentMailDetails />} />
             <Route path='/home/draft' element={<ComposeMail />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />

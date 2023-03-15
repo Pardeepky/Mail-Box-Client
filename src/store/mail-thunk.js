@@ -4,6 +4,7 @@ import axios from 'axios';
 export const sendMailHandler = (mailobj) => {
     return async (disptach) => {
         let emailId = await mailobj.email.replace(/[&@.]/g, "");
+        let userId = JSON.parse(localStorage.getItem("mailId").replace(/[&@.]/g, ""));
 
         const postMail = async () => {
             const response = await fetch(
@@ -17,6 +18,10 @@ export const sendMailHandler = (mailobj) => {
                 }
             );
             const data = await response.json();
+            const resp2 = await axios.post(`https://mail-box-client-50996-default-rtdb.firebaseio.com/sentMails/${userId}.json`, mailobj)
+            if (resp2.status) {
+                //do nothing
+            }
             if (data.error) {
                 throw new Error("failed");
             }
@@ -40,11 +45,20 @@ export const getMailHandler = () => {
             const response = await fetch(
                 `https://mail-box-client-50996-default-rtdb.firebaseio.com/${emailId}.json`);
             const data = await response.json();
+
             if (data.error) {
                 throw new Error("failed");
             }
             return data;
         };
+
+        const getSentMail = async () => {
+            const resp2 = await axios.get(`https://mail-box-client-50996-default-rtdb.firebaseio.com/sentMails/${emailId}.json`)
+            if (resp2.status) {
+                const data = resp2.data;
+                return data
+            }
+        }
         try {
             const data = await getMail();
             const mailList = [];
@@ -55,8 +69,20 @@ export const getMailHandler = () => {
                 };
                 mailList.push(Obj);
             }
+
+            const sentMail = await getSentMail();
+            const sentMailList = []
+            for (const key in sentMail) {
+                const Obj = {
+                    id: key,
+                    ...sentMail[key],
+                };
+                sentMailList.push(Obj);
+            }
+
             disptach(mailSliceAction.updateCount(mailList));
             disptach(mailSliceAction.updateMailList(mailList));
+            disptach(mailSliceAction.updateMailSentList(sentMailList))
         } catch (error) {
             console.log(error.message);
         }
@@ -124,6 +150,25 @@ export const deleteItemById = (id) => {
 
         const deleteEmail = async () => {
             const response = await axios.delete(`https://mail-box-client-50996-default-rtdb.firebaseio.com/${emailId}/${id}.json`);
+            if (response.status) {
+                return;
+            }
+        };
+        try {
+            await deleteEmail();
+            dispatch(getMailHandler())
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
+export const deleteSentItemById = (id) => {
+    return async (dispatch) => {
+        let emailId = JSON.parse(localStorage.getItem("mailId").replace(/[&@.]/g, ""));
+
+        const deleteEmail = async () => {
+            const response = await axios.delete(`https://mail-box-client-50996-default-rtdb.firebaseio.com/sentMails/${emailId}/${id}.json`);
             if (response.status) {
                 return;
             }

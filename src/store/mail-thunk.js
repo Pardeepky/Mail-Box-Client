@@ -148,6 +148,7 @@ export const updateItemById = (item, id) => {
         try {
             dispatch(mailSliceAction.setLoading(true))
             await UpdateEmailList();
+            dispatch(getMailHandler());
         } catch (error) {
             console.log(error);
         } finally {

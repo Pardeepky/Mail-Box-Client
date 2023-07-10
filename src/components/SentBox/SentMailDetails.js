@@ -1,6 +1,5 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useParams } from 'react-router-dom'
 import useHttp from '../../hooks/api';
 
@@ -16,7 +15,7 @@ const SentMailDetails = () => {
         };
 
         fetchTasks(
-            { url: `https://mail-box-client-50996-default-rtdb.firebaseio.com/sentMails/${emailId}/${id}.json` },
+            { url: `https://mail-box-client2-default-rtdb.firebaseio.com/sentMails/${emailId}/${id}.json` },
             transformTasks
         );
     }, [fetchTasks]);

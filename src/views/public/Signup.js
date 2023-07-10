@@ -48,7 +48,7 @@ const Signup = ({ setIsLogging }) => {
             }
             // Submit form if there are no errors
             if (!formErrors.email && !formErrors.password && !formErrors.confirmPassword) {
-                const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDkJ3r2soM_XZASdLamLILuVUcuBEVARAA', {
+                const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDRLiYSuq97uJcC_v2MIYSo-DgGVfA4sAo', {
                     method: 'POST',
                     body: JSON.stringify({
                         email: enteredEmail,

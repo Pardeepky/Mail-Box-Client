@@ -8,7 +8,7 @@ export const sendMailHandler = (mailobj) => {
 
         const postMail = async () => {
             const response = await fetch(
-                `https://mail-box-client-50996-default-rtdb.firebaseio.com/${emailId}.json`,
+                `https://mail-box-client2-default-rtdb.firebaseio.com/${emailId}.json`,
                 {
                     method: "POST",
                     body: JSON.stringify(mailobj),
@@ -18,7 +18,7 @@ export const sendMailHandler = (mailobj) => {
                 }
             );
             const data = await response.json();
-            const resp2 = await axios.post(`https://mail-box-client-50996-default-rtdb.firebaseio.com/sentMails/${userId}.json`, mailobj)
+            const resp2 = await axios.post(`https://mail-box-client2-default-rtdb.firebaseio.com/sentMails/${userId}.json`, mailobj)
             if (resp2.status) {
                 //do nothing
             }
@@ -46,7 +46,7 @@ export const getMailHandler = () => {
 
         const getMail = async () => {
             const response = await fetch(
-                `https://mail-box-client-50996-default-rtdb.firebaseio.com/${emailId}.json`);
+                `https://mail-box-client2-default-rtdb.firebaseio.com/${emailId}.json`);
             const data = await response.json();
 
             if (data.error) {
@@ -56,7 +56,7 @@ export const getMailHandler = () => {
         };
 
         const getSentMail = async () => {
-            const resp2 = await axios.get(`https://mail-box-client-50996-default-rtdb.firebaseio.com/sentMails/${emailId}.json`)
+            const resp2 = await axios.get(`https://mail-box-client2-default-rtdb.firebaseio.com/sentMails/${emailId}.json`)
             if (resp2.status) {
                 const data = resp2.data;
                 return data
@@ -100,7 +100,7 @@ export const getMailByIdHandler = (id) => {
         let emailId = JSON.parse(localStorage.getItem("mailId").replace(/[&@.]/g, ""));
 
         const getMail = async () => {
-            const response = await fetch(`https://mail-box-client-50996-default-rtdb.firebaseio.com/${emailId}/${id}.json`);
+            const response = await fetch(`https://mail-box-client2-default-rtdb.firebaseio.com/${emailId}/${id}.json`);
             const data = await response.json();
             if (data.error) {
                 throw new Error("failed");
@@ -125,7 +125,7 @@ export const updateItemById = (item, id) => {
 
         const UpdateEmailList = async () => {
             const response = await fetch(
-                `https://mail-box-client-50996-default-rtdb.firebaseio.com/${emailId}/${id}.json`,
+                `https://mail-box-client2-default-rtdb.firebaseio.com/${emailId}/${id}.json`,
                 {
                     method: "PATCH",
                     body: JSON.stringify({
@@ -162,7 +162,7 @@ export const deleteItemById = (id) => {
         let emailId = JSON.parse(localStorage.getItem("mailId").replace(/[&@.]/g, ""));
 
         const deleteEmail = async () => {
-            const response = await axios.delete(`https://mail-box-client-50996-default-rtdb.firebaseio.com/${emailId}/${id}.json`);
+            const response = await axios.delete(`https://mail-box-client2-default-rtdb.firebaseio.com/${emailId}/${id}.json`);
             if (response.status) {
                 return;
             }
@@ -184,7 +184,7 @@ export const deleteSentItemById = (id) => {
         let emailId = JSON.parse(localStorage.getItem("mailId").replace(/[&@.]/g, ""));
 
         const deleteEmail = async () => {
-            const response = await axios.delete(`https://mail-box-client-50996-default-rtdb.firebaseio.com/sentMails/${emailId}/${id}.json`);
+            const response = await axios.delete(`https://mail-box-client2-default-rtdb.firebaseio.com/sentMails/${emailId}/${id}.json`);
             if (response.status) {
                 return;
             }

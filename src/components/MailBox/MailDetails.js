@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Button, Card } from "react-bootstrap";
@@ -25,7 +24,7 @@ const MailDetails = () => {
     };
 
     fetchTasks(
-      { url: `https://mail-box-client-50996-default-rtdb.firebaseio.com/${emailId}/${id}.json` },
+      { url: `https://mail-box-client2-default-rtdb.firebaseio.com/${emailId}/${id}.json` },
       transformTasks
     );
   }, [fetchTasks]);
